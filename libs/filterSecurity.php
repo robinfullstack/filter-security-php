@@ -110,4 +110,26 @@ class FilterSecurity
 
         return $generateURL;
     }
+
+    /**
+     * Apply filter with redirect to page not found.
+     *
+     * @return false
+     */
+    private function validateURL($arrayRequest)
+    {
+        foreach ($this->arrayWords() as $words) {
+            //Search keyword in string.
+            $findText = strpos($this->convertString($arrayRequest), $words);
+
+            if ($findText !== false) {
+                header('Location: '
+                    . $this->getUrl()
+                    . '/pages/error-404.php');
+                exit;
+            }
+        }
+
+        return false;
+    }
 }
