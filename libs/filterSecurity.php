@@ -69,4 +69,45 @@ class FilterSecurity
 
         return $words;
     }
+
+    /**
+     * Convert array request to string.
+     *
+     * @return string
+     */
+    private function convertString($arrayRequest)
+    {
+        $convertString = json_encode($arrayRequest);
+
+        //Make a string lowercase.
+        $convertLower = strtolower($convertString);
+
+        //Skip spaces in string.
+        $ValidateString = str_replace(' ', '', $convertLower);
+
+        return $ValidateString;
+    }
+
+    /**
+     * Get current url.
+     *
+     * @return url
+     */
+    private function getUrl()
+    {
+        if (isset($_SERVER['HTTPS'])
+            && $_SERVER['HTTPS'] == 'on')
+            self::$requestProtocol = 'https://';
+        else
+            self::$requestProtocol = 'http://';
+
+        self::$requestHost = $_SERVER['HTTP_HOST'];
+
+        $generateURL = self::$requestProtocol
+            . self::$requestHost
+            . '/'
+            . self::mainFolder;
+
+        return $generateURL;
+    }
 }
