@@ -132,4 +132,25 @@ class FilterSecurity
 
         return false;
     }
+
+    /**
+     * Validate whether the GET or POST request.
+     *
+     * @return false
+     */
+    public function validateRequest()
+    {
+        //Get url info.
+        self::$requestData = $_REQUEST;
+        self::$requestMethod = $_SERVER["REQUEST_METHOD"];
+        self::$requestUrl = $_SERVER['REQUEST_URI'];
+
+        if (self::$requestMethod == 'POST') {
+            if (isset(self::$requestData) && is_array(self::$requestData))
+                $this->validateURL(self::$requestData);
+        } else if (self::$requestMethod == 'GET')
+            $this->validateURL(self::$requestUrl);
+
+        return false;
+    }
 }
